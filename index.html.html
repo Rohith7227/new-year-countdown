@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 26.2.5.1 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="00:00:00"/>
+	<style type="text/css">
+		@page { size: 8.27in 11.69in; margin: 0.79in }
+		p { margin-bottom: 0.1in; line-height: 115%; background: transparent }
+		pre { background: transparent }
+		pre.western { font-family: "Liberation Mono", monospace; font-size: 10pt }
+		pre.cjk { font-family: "NSimSun", monospace; font-size: 10pt }
+		pre.ctl { font-family: "Liberation Mono", monospace; font-size: 10pt }
+	</style>
+</head>
+<body lang="en-US" link="#000080" vlink="#800000" dir="ltr"><pre class="western">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+&lt;title&gt;New Year's Eve Countdown&lt;/title&gt;
+
+&lt;style&gt;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#020024,#090979,#000);
+overflow:hidden;
+color:white;
+}
+
+body::before{
+content:&quot;&quot;;
+position:absolute;
+width:200%;
+height:200%;
+background:
+radial-gradient(circle,#ffffff88 1px,transparent 1px);
+background-size:40px 40px;
+animation:stars 80s linear infinite;
+opacity:.35;
+}
+
+@keyframes stars{
+from{transform:translateY(0);}
+to{transform:translateY(-500px);}
+}
+
+.container{
+position:relative;
+text-align:center;
+z-index:1;
+padding:20px;
+}
+
+h1{
+font-size:clamp(2rem,5vw,4rem);
+margin-bottom:25px;
+letter-spacing:2px;
+}
+
+.countdown{
+display:grid;
+grid-template-columns:repeat(4,minmax(70px,140px));
+gap:18px;
+justify-content:center;
+}
+
+.box{
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(12px);
+border:1px solid rgba(255,255,255,.15);
+border-radius:18px;
+padding:18px;
+box-shadow:0 0 25px rgba(255,255,255,.12);
+}
+
+.number{
+font-size:clamp(2rem,6vw,4.5rem);
+font-weight:bold;
+color:#ffd700;
+text-shadow:0 0 12px #ffd700,0 0 28px #ff8c00;
+}
+
+.label{
+margin-top:8px;
+font-size:.9rem;
+letter-spacing:1px;
+opacity:.9;
+text-transform:uppercase;
+}
+
+.message{
+display:none;
+font-size:clamp(2.5rem,8vw,5rem);
+font-weight:bold;
+color:#ffd700;
+text-shadow:0 0 20px #fff,0 0 50px #ffd700;
+animation:pop 1.2s infinite alternate;
+}
+
+@keyframes pop{
+from{transform:scale(1);}
+to{transform:scale(1.08);}
+}
+
+@media(max-width:600px){
+.countdown{
+grid-template-columns:repeat(2,1fr);
+}
+}
+&lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+&lt;div class=&quot;container&quot;&gt;
+&lt;h1&gt;Countdown to New Year's Eve&lt;/h1&gt;
+
+&lt;div id=&quot;countdown&quot; class=&quot;countdown&quot;&gt;
+&lt;div class=&quot;box&quot;&gt;
+&lt;div id=&quot;days&quot; class=&quot;number&quot;&gt;0&lt;/div&gt;
+&lt;div class=&quot;label&quot;&gt;Days&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;box&quot;&gt;
+&lt;div id=&quot;hours&quot; class=&quot;number&quot;&gt;0&lt;/div&gt;
+&lt;div class=&quot;label&quot;&gt;Hours&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;box&quot;&gt;
+&lt;div id=&quot;minutes&quot; class=&quot;number&quot;&gt;0&lt;/div&gt;
+&lt;div class=&quot;label&quot;&gt;Minutes&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;box&quot;&gt;
+&lt;div id=&quot;seconds&quot; class=&quot;number&quot;&gt;0&lt;/div&gt;
+&lt;div class=&quot;label&quot;&gt;Seconds&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;message&quot; class=&quot;message&quot;&gt;🎉 Happy New Year! 🎆&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+const target=new Date(&quot;January 1, 2027 00:00:00&quot;).getTime();
+
+function updateCountdown(){
+
+const now=Date.now();
+const distance=target-now;
+
+if(distance&lt;=0){
+document.getElementById(&quot;countdown&quot;).style.display=&quot;none&quot;;
+document.getElementById(&quot;message&quot;).style.display=&quot;block&quot;;
+clearInterval(timer);
+return;
+}
+
+const days=Math.floor(distance/(1000*60*60*24));
+const hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+const minutes=Math.floor((distance%(1000*60*60))/(1000*60));
+const seconds=Math.floor((distance%(1000*60))/1000);
+
+document.getElementById(&quot;days&quot;).textContent=days;
+document.getElementById(&quot;hours&quot;).textContent=String(hours).padStart(2,&quot;0&quot;);
+document.getElementById(&quot;minutes&quot;).textContent=String(minutes).padStart(2,&quot;0&quot;);
+document.getElementById(&quot;seconds&quot;).textContent=String(seconds).padStart(2,&quot;0&quot;);
+}
+
+updateCountdown();
+const timer=setInterval(updateCountdown,1000);
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</body>
+</html>
